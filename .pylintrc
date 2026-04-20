@@ -1,0 +1,58 @@
+[MASTER]
+# Ignorar archivos comunes
+ignore=migrations,venv,node_modules
+
+[MESSAGES CONTROL]
+disable=
+    # Docstrings (ruido en proyectos reales)
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+
+    # Estilo ya cubierto por formateador
+    C0330,  # bad-continuation
+    C0326,  # bad-whitespace
+    C0303,  # trailing-whitespace
+
+    # Muy estrictas / poco útiles en Django
+    R0903,  # too-few-public-methods
+    R0902,  # too-many-instance-attributes
+    R0913,  # too-many-arguments
+
+    # Falsos positivos comunes en Django
+    E1101,  # no-member
+
+    # Comentarios TODO
+    W0511
+
+
+[FORMAT]
+max-line-length=88
+
+
+[DESIGN]
+# Límites razonables (puedes ajustarlos)
+max-args=6
+max-attributes=10
+max-public-methods=20
+
+
+[TYPECHECK]
+# Django magic attributes
+ignored-modules=django
+ignored-classes=objects,DoesNotExist,MultipleObjectsReturned
+
+
+[VARIABLES]
+# Variables que Pylint permite no usar
+dummy-variables-rgx=_|dummy
+
+
+[REPORTS]
+output-format=colorized
+reports=no
+score=no
+
+
+[LOGGING]
+logging-format-style=old
