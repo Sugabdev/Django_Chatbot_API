@@ -40,3 +40,4 @@ venv.bak/
 *~
 .DS_Store
 superuser.md
+prod-ca-2021.crt

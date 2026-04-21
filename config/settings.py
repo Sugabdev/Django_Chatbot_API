@@ -94,7 +94,8 @@ CORS_ALLOWED_ORIGINS = env.list(
 )
 CORS_ALLOW_CREDENTIALS = True
 
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+CHANNEL_LAYERS = {"default": {
+    "BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 CACHES = {
     "default": {
@@ -119,7 +120,8 @@ if DEBUG:
     RATELIMIT_ASSERT = False
 
 OPENROUTER_API_KEY = env("OPENROUTER_API_KEY", default="")
-OPENROUTER_BASE_URL = env("OPENROUTER_BASE_URL", default="https://openrouter.ai/api/v1")
+OPENROUTER_BASE_URL = env("OPENROUTER_BASE_URL",
+                          default="https://openrouter.ai/api/v1")
 DEFAULT_MODEL = env("DEFAULT_MODEL", default="")
 REDIS_URL = env("REDIS_URL", default="")
 
