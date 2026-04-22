@@ -59,7 +59,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-DATABASES = {"default": env.db("DATABASE_URL", default="")}
+DATABASES = {
+    "default": {
+        **env.db("DATABASE_URL", default=""),
+        "OPTIONS": {
+            "sslmode": "require",
+            "sslrootcert": "system",
+        },
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
