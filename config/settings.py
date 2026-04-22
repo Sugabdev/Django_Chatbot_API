@@ -63,8 +63,7 @@ DATABASES = {
     "default": {
         **env.db("DATABASE_URL", default=""),
         "OPTIONS": {
-            "sslmode": "verify-full",
-            "sslrootcert": "system",
+            "sslmode": "require"
         },
     }
 }
