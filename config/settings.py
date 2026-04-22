@@ -59,7 +59,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-DATABASES = {"default": env.db("DATABASE_URL", default="sqlite:///db.sqlite3")}
+DATABASES = {"default": env.db("DATABASE_URL", default="DATABASE_DEV_URL")}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
