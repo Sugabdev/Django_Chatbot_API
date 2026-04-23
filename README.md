@@ -177,6 +177,10 @@ poetry run pylint apps/
 # Con autopep8
 poetry run autopep8 --in-place --recursive apps/
 ```
+## BBDD
+
+Supabase
+- https://gfsrxypbxogusivbkbpx.supabase.co
 
 ## Deployment
 
