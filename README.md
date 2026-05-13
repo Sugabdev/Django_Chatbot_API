@@ -67,6 +67,7 @@ Chatbot web desarrollado con Python y Django que expone una REST API consumible 
 | GET | `/api/conversations/{id}/` | Obtener detalle de una conversación |
 | DELETE | `/api/conversations/{id}/` | Eliminar una conversación |
 | POST | `/api/conversations/{id}/messages/` | Enviar mensaje y recibir respuesta |
+| POST | `/api/conversations/send/` | Crear conversación, enviar mensaje y recibir respuesta |
 
 #### Ejemplo: Crear conversación
 

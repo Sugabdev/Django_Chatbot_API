@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from django.conf import settings
@@ -103,6 +103,70 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
         return Response(
             {
+                "user_message": MessageSerializer(user_message).data,
+                "assistant_message": MessageSerializer(assistant_message).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=False, methods=["post"], url_path="send")
+    def send(self, request):
+        """
+        Envía un mensaje. Si no se proporciona conversation_id,
+        crea una nueva conversación automáticamente.
+        """
+
+        serializer = SendMessageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        content = serializer.validated_data["content"]
+        model = serializer.validated_data.get("model", settings.DEFAULT_MODEL)
+        conversation_id = request.data.get("conversation_id")
+
+        # Crea una nueva conversaci?on si no existe
+        if conversation_id:
+            conversation = Conversation.objects.get(id=conversation_id)
+            is_new = False
+        else:
+            conversation = Conversation.objects.create(
+                user=None,
+                title=None,
+                model=model,
+            )
+            is_new = True
+
+        # mensaje usuario
+        user_message = Message.objects.create(
+            conversation=conversation,
+            role="user",
+            content=content,
+        )
+
+        history = build_message_history(conversation.id)
+
+        client = OpenRouterClient()
+
+        import asyncio
+
+        async def get_response():
+            return await client.chat_completion(history, model=model)
+
+        assistant_content = asyncio.run(get_response())
+
+        assistant_message = Message.objects.create(
+            conversation=conversation,
+            role="assistant",
+            content=assistant_content,
+        )
+
+        # Actualiza el título de la conversación
+        if is_new:
+            conversation.title = " ".join(content.split()[:6])
+            conversation.save(update_fields=["title"])
+
+        return Response(
+            {
+                "conversation_id": conversation.id,  # 🔥 importante
                 "user_message": MessageSerializer(user_message).data,
                 "assistant_message": MessageSerializer(assistant_message).data,
             },
